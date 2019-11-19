@@ -1,27 +1,32 @@
-import { HandlerFunction } from 'lambda-api';
-import { sushiDao } from './dao/sushiDao';
+import { Request, Response } from 'lambda-api';
+import { SushiDao } from './dao/sushiDao';
 
-export const sushi: { [key: string]: HandlerFunction } = {
-  show: async (req, res) => {
+export class Sushi {
+  async show(req: Request, res: Response) {
     const param = req.params.id;
-    const json = await sushiDao(res).findById(param);
+    const sushiDao = new SushiDao(res);
+    const json = await sushiDao.findById(param);
     return res.json(json);
-  },
-  index: async (req, res) => {
-    const json = await sushiDao(res).findAll();
+  }
+  async list(req: Request, res: Response) {
+    const sushiDao = new SushiDao(res);
+    const json = await sushiDao.findAll();
     return res.json(json);
-  },
-  create: async (req, res) => {
+  }
+  async create(req: Request, res: Response) {
     // TODO: バリデーション?
-    const json = await sushiDao(res).save(req.body);
+    const sushiDao = new SushiDao(res);
+    const json = await sushiDao.save(req.body);
     return res.json(json);
-  },
-  update: async (req, res) => {
-    // const json = await sushiDao(res).update(req.body)
-    return { message: 'Hello World' };
-  },
-  destroy: async (req, res) => {
-    const json = await sushiDao(res).removeById(req.body.id);
+  }
+  async update(req: Request, res: Response) {
+    const sushiDao = new SushiDao(res);
+    const json = await sushiDao.update(req.body);
     return res.json(json);
-  },
-};
+  }
+  async delete(req: Request, res: Response) {
+    const sushiDao = new SushiDao(res);
+    const json = await sushiDao.deleteById(req.body.id);
+    return res.json(json);
+  }
+}

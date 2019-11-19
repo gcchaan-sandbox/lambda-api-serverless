@@ -8,6 +8,6 @@ export interface Sushi {
 
 export interface SushiItem extends AttributeMap {
   id: { S: string };
-  name: { S: string };
+  sushi_name: { S: string };
   price: { N: string };
 }

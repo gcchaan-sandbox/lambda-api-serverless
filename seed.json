@@ -1,49 +1,49 @@
 [
   {
     "id": "bpKp0ezeTd",
-    "name": "ika",
+    "sushi_name": "ika",
     "price": 100,
     "createdAt": 1577804400,
     "updatedAt": 1577804400
   },
   {
     "id": "-uvFusd886",
-    "name": "tako",
+    "sushi_name": "tako",
     "price": 200,
     "createdAt": 1577804700,
     "updatedAt": 1577804700
   },
   {
     "id": "o2mseoV-Fa",
-    "name": "ebi",
+    "sushi_name": "ebi",
     "price": 100,
     "createdAt": 1577805000,
     "updatedAt": 1577805000
   },
   {
     "id": "qCQqHaBj0U",
-    "name": "aji",
+    "sushi_name": "aji",
     "price": 200,
     "createdAt": 1577805300,
     "updatedAt": 1577805300
   },
   {
     "id": "vvSA5ZALba",
-    "name": "kohada",
+    "sushi_name": "kohada",
     "price": 200,
     "createdAt": 1577805600,
     "updatedAt": 1577805600
   },
   {
     "id": "-0CHo0QEwv",
-    "name": "akami",
+    "sushi_name": "akami",
     "price": 200,
     "createdAt": 1577805900,
     "updatedAt": 1577805900
   },
   {
     "id": "CBM_4MeVqE",
-    "name": "chuutoro",
+    "sushi_name": "chuutoro",
     "price": 250,
     "createdAt": 1577806200,
     "updatedAt": 1577806200
