@@ -1,4 +1,4 @@
-import {AttributeMap} from 'aws-sdk/clients/dynamodb';
+import { AttributeMap } from 'aws-sdk/clients/dynamodb';
 
 export interface Sushi {
   id: string;
@@ -7,7 +7,7 @@ export interface Sushi {
 }
 
 export interface SushiItem extends AttributeMap {
-  id: {S: string};
-  name: {S: string};
-  price:  {N: string};
+  id: { S: string };
+  name: { S: string };
+  price: { N: string };
 }

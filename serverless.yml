@@ -27,6 +27,7 @@ provider:
   environment:
     STAGE: ${self:provider.stage}
     TZ: Asia/Tokyo
+
 functions:
   hello:
     handler: handler.app
