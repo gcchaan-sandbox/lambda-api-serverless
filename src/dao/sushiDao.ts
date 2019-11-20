@@ -1,21 +1,12 @@
 import { Response } from 'lambda-api';
 import { config } from 'node-config-ts';
 import { UpdateItemInput } from 'aws-sdk/clients/dynamodb';
-import { ddb } from '../db/client';
+import { client } from '../db/client';
 import { Sushi, SushiItem } from '../types';
 const nanoid = require('nanoid');
 
-function mapper(param: SushiItem): Sushi {
-  const { id, sushi_name, price } = param;
-  return {
-    id: id.S,
-    name: sushi_name.S,
-    price: parseInt(price.N),
-  };
-}
-
 const stage = process.env.STAGE || 'dev';
-const table = `${config.ddb.table}-${stage}`;
+const table = `${config.table}-${stage}`;
 
 export class SushiDao {
   private res: Response;
@@ -25,13 +16,13 @@ export class SushiDao {
   findById(id: string): Promise<Sushi> {
     const getItemParams = {
       TableName: table,
-      Key: { id: { S: id } },
+      Key: { id: id },
     };
     try {
-      return ddb
-        .getItem(getItemParams)
+      return client
+        .get(getItemParams)
         .promise()
-        .then(res => mapper(res.Item as SushiItem));
+        .then(res => res.Item as Sushi);
     } catch (e) {
       console.error(e);
     }
@@ -41,10 +32,10 @@ export class SushiDao {
       const scanItemParams = {
         TableName: table,
       };
-      return ddb
+      return client
         .scan(scanItemParams)
         .promise()
-        .then(res => res.Items.map((sushi: SushiItem) => mapper(sushi)));
+        .then(res => res.Items as Sushi[]);
     } catch (e) {
       console.error(e);
     }
@@ -61,9 +52,9 @@ export class SushiDao {
         TableName: table,
         Item: sushi,
       };
-      ddb.putItem(putItemParams).promise();
+      client.put(putItemParams).promise();
       // TODO: class にして this.findById の結果を返したい
-      return id;
+      return this.findById(id);
     } catch (e) {
       console.error(e);
     }
@@ -81,8 +72,8 @@ export class SushiDao {
       },
     };
     try {
-      const res = ddb.updateItem(updateItemParams).promise();
-      return res;
+      const res = client.update(updateItemParams).promise();
+      return this.findById(sushi.id);
     } catch (e) {
       console.error(e);
     }
@@ -93,7 +84,7 @@ export class SushiDao {
       Key: { id: { S: id } },
     };
     try {
-      ddb.deleteItem(deleteItemParams).promise();
+      client.delete(deleteItemParams).promise();
     } catch (e) {
       console.error(e);
     }

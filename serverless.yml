@@ -8,16 +8,18 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   profile: gcchaan
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'ap-northeast-1'}
+  tracing:
+    apiGateway: true
   memorySize: 128
   timeout: 10
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:Query
+        - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:Update*
         - dynamodb:PutItem
@@ -28,9 +30,14 @@ provider:
     STAGE: ${self:provider.stage}
     TZ: Asia/Tokyo
 
+package:
+  include:
+    - config/**
+
 functions:
   hello:
     handler: handler.app
+    tracing: true
     events:
       - http:
           method: any
@@ -38,7 +45,7 @@ functions:
 
 custom:
   stage: ${self:provider.stage}
-  table: ${file(config/default.json):ddb.table}-${self:provider.stage}
+  table: ${file(config/default.json):table}-${self:provider.stage}
   cloudform:
     resources: "template/index"
   dynamodb:

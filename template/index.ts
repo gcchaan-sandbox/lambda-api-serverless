@@ -5,7 +5,7 @@ const stage = process.env.STAGE || 'dev';
 
 export default {
   DynamoDBMessageLogTable: new DynamoDB.Table({
-    TableName: `${config.ddb.table}-${stage}`,
+    TableName: `${config.table}-${stage}`,
     AttributeDefinitions: [
       {
         AttributeName: 'id',
