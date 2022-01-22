@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "lambda-api": "^0.10.4",
-    "nanoid": "^2.1.7",
+    "nanoid": "^3.1.31",
     "node-config-ts": "^2.3.1",
     "source-map-support": "^0.5.16"
   },
